@@ -12,7 +12,7 @@ namespace Example.Modules
         [Summary("Make the bot say something")]
         [RequireUserPermission(GuildPermission.Administrator)]
         public Task Say([Remainder]string text)
-            => ReplyAsync(text + "YO");
+            => ReplyAsync(text);
         
         [Group("set"), Name("Example")]
         [RequireContext(ContextType.Guild)]
