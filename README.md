@@ -1,7 +1,7 @@
 Discord.Net Bot
 # Setup
 ## Config
-add a config file named "_config.yml" and place root directory
+add a config file named "_config.yml" and place in src\\bin\\Debug\\net5.0
 it should look like this:
 ```
 prefix: !
