@@ -1,8 +1,20 @@
-Last updated for `2.0.1`
+Discord.Net Bot
+# Setup
+## Config
+add a config file named "_config.yml" and place root directory
+it should look like this:
+```
+prefix: !
+tokens:
+	discord: DISCORD_BOT_TOKEN
+```
+Replace **DISCORD_BOT_TOKEN** with your discord bot's token
 
-## Discord.Net-Example
-An example bot for [Discord.Net](https://github.com/discord-net/Discord.Net). If you would like a specific example added to this project, send an `@Auxesis#8522` in the [Discord API](https://discordapp.com/invite/discord-api) server with your request or [open an issue](https://github.com/Auxes/Discord.Net-Example/issues/new).
+See this [Dev Guide](https://discord.com/developers/docs/getting-started) for setting up a discord bot on discord and getting a bot token
 
-### Other Examples
-- [Patek](https://github.com/foxbot/patek) by foxbot
-- [Dogey](https://github.com/Aux/Dogey) by Auxesis
+## Entitiy Framework
+
+
+
+
+## AWS
