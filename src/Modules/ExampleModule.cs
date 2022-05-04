@@ -2,18 +2,28 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using DiscordBot.Models;
 
-namespace Example.Modules
+namespace DiscordBot.Modules
 {
     [Name("Example")]
     public class ExampleModule : ModuleBase<SocketCommandContext>
     {
+        private DiscordBotDBContext _context;
+        public ExampleModule(DiscordSocketClient discord, DiscordBotDBContext context)
+        {
+            _context = context;
+        }
+
         [Command("say"), Alias("s")]
         [Summary("Make the bot say something")]
         [RequireUserPermission(GuildPermission.Administrator)]
         public Task Say([Remainder]string text)
-            => ReplyAsync(text);
-        
+        {
+            return ReplyAsync(text);
+        }
+
         [Group("set"), Name("Example")]
         [RequireContext(ContextType.Guild)]
         public class Set : ModuleBase

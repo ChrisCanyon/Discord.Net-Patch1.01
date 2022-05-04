@@ -1,25 +1,26 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using DiscordBot.Models;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Example
+namespace DiscordBot
 {
     public class LoggingService
     {
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
-
+        private DiscordBotDBContext _context;
         private string _logDirectory { get; }
         private string _logFile => Path.Combine(_logDirectory, $"{DateTime.UtcNow.ToString("yyyy-MM-dd")}.txt");
 
         // DiscordSocketClient and CommandService are injected automatically from the IServiceProvider
-        public LoggingService(DiscordSocketClient discord, CommandService commands)
+        public LoggingService(DiscordSocketClient discord, CommandService commands, DiscordBotDBContext context)
         {
             _logDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
-            
+            _context = context;
             _discord = discord;
             _commands = commands;
             

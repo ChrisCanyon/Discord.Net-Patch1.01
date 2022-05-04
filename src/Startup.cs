@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using DiscordBot.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Example
+namespace DiscordBot
 {
     public class Startup
     {
@@ -51,6 +53,8 @@ namespace Example
                 LogLevel = LogSeverity.Verbose,     // Tell the logger to give Verbose amount of info
                 DefaultRunMode = RunMode.Async,     // Force all commands to run async by default
             }))
+            .AddDbContext<DiscordBotDBContext>(options =>
+                options.UseSqlServer(Configuration["connection_string"]))
             .AddSingleton<CommandHandler>()         // Add the command handler to the collection
             .AddSingleton<StartupService>()         // Add startupservice to the collection
             .AddSingleton<LoggingService>()         // Add loggingservice to the collection
