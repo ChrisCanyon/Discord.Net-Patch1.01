@@ -29,7 +29,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 You should have a DB created on your local SQL Server instance. Open SSMS and check if it exists
 Now that your database is created, connect to it in Visual Studio using the server explorer and find the connection string. Add the connection string to _config.yml
 
-###If changes to DB schema are made please rerun EF scaffolding to reflect those changes in code
+### If changes to DB schema are made please rerun EF scaffolding to reflect those changes in code
 From the src directory run:
 
 ```
