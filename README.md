@@ -23,6 +23,7 @@ See this [Dev Guide](https://discord.com/developers/docs/getting-started) for se
 
 ## Entity Framework (Local DB Setup)
 Download and install [SQLServer Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+
 Download and install [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
 
 In an admin PowerShell window run:
