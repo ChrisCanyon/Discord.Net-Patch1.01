@@ -1,4 +1,12 @@
-Discord.Net Bot
+# Discord.Net DiscordBot
+Base Project for AWS hosted Discord Bot with instructions for local development and deploy
+Technologies Used:
+- Discord.Net
+- SQL Server
+- Entity Framework
+- AWS Elastic Beanstalk
+- AWS RDS
+
 # Setup
 ## Config
 add a config file named "_config.yml" and place in src\\bin\\Debug\\net5.0
@@ -43,3 +51,8 @@ dotnet tool install --global dotnet-ef
 
 
 ## AWS
+
+### Elastic Beanstalk (EB)
+
+### Relational Database Service (RDS)
+
