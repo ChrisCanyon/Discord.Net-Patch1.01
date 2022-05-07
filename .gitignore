@@ -8,7 +8,8 @@
 *.sln.docstates
 
 src/_config.yml
-
+src/appsettings.Development.json
+notes/*
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

@@ -4,16 +4,32 @@ using Discord.WebSocket;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using DiscordBot.Models;
+using System.Collections.Generic;
 
 namespace DiscordBot.Modules
 {
     [Name("Example")]
     public class ExampleModule : ModuleBase<SocketCommandContext>
     {
-        private DiscordBotDBContext _context;
-        public ExampleModule(DiscordSocketClient discord, DiscordBotDBContext context)
+        private DiscordBotDBContext DBContext;
+        private DiscordSocketClient DiscordClient;
+        private VoiceConnectivityService VoiceService;
+
+        public ExampleModule(DiscordSocketClient discord, DiscordBotDBContext context, VoiceConnectivityService voice)
         {
-            _context = context;
+            DBContext = context;
+            DiscordClient = discord;
+            VoiceService = voice;
+        }
+
+        [Command("join", RunMode = RunMode.Async)]
+        public async Task JoinChannel(IVoiceChannel channel = null)
+        {
+            // Get the audio channel
+            channel = channel ?? (Context.User as IGuildUser)?.VoiceChannel;
+            if (channel == null) { await Context.Channel.SendMessageAsync("User must be in a voice channel, or a voice channel must be passed as an argument."); return; }
+
+            VoiceService.HandleAudioConnection(channel);
         }
 
         [Command("say"), Alias("s")]
@@ -22,6 +38,20 @@ namespace DiscordBot.Modules
         public Task Say([Remainder]string text)
         {
             return ReplyAsync(text);
+        }
+
+        [Command("taco"), Alias("t")]
+        [Summary("Make the bot say something")]
+        [RequireUserPermission(GuildPermission.SendMessages)]
+        public async Task Test([Remainder] string text)
+        {
+            var GetDataTask = DBContext.DiscordUsers.ToArrayAsync();
+
+            List<DiscordUser> Users = new List<DiscordUser>(await GetDataTask);
+
+            SocketUser user = Context.User;
+
+            await ReplyAsync(text);
         }
 
         [Group("set"), Name("Example")]

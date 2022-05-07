@@ -3,23 +3,31 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using DiscordBot.Helpers;
 using DiscordBot.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Amazon.Extensions.Configuration.SystemsManager;
+
 
 namespace DiscordBot
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public Startup(string[] args)
         {
-            var builder = new ConfigurationBuilder()        // Create a new instance of the config builder
+            var builder = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)      // Specify the default location for the config file
                 .AddYamlFile("_config.yml");                // Add this (yaml encoded) file to the configuration
             Configuration = builder.Build();                // Build the configuration
+        }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
         }
 
         public static async Task RunAsync(string[] args)
@@ -53,9 +61,15 @@ namespace DiscordBot
                 LogLevel = LogSeverity.Verbose,     // Tell the logger to give Verbose amount of info
                 DefaultRunMode = RunMode.Async,     // Force all commands to run async by default
             }))
+#if DEBUG
             .AddDbContext<DiscordBotDBContext>(options =>
-                options.UseSqlServer(Configuration["connection_string"]))
+                options.UseSqlServer(Configuration["connection_string:local"])) //local DB
+#else
+            .AddDbContext<DiscordBotDBContext>(options =>
+                options.UseSqlServer(AWSHelper.GetRDSConnectionString(Configuration))) //AWS RDS
+#endif
             .AddSingleton<CommandHandler>()         // Add the command handler to the collection
+            .AddSingleton<VoiceConnectivityService>()
             .AddSingleton<StartupService>()         // Add startupservice to the collection
             .AddSingleton<LoggingService>()         // Add loggingservice to the collection
             .AddSingleton<Random>()                 // Add random to the collection

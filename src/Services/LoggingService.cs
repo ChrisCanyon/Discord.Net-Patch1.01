@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using DiscordBot.Helpers;
 using DiscordBot.Models;
 using System;
 using System.IO;
@@ -12,7 +13,7 @@ namespace DiscordBot
     {
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
-        private DiscordBotDBContext _context;
+        private DiscordBotDBContext _dbcontext;
         private string _logDirectory { get; }
         private string _logFile => Path.Combine(_logDirectory, $"{DateTime.UtcNow.ToString("yyyy-MM-dd")}.txt");
 
@@ -20,16 +21,31 @@ namespace DiscordBot
         public LoggingService(DiscordSocketClient discord, CommandService commands, DiscordBotDBContext context)
         {
             _logDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
-            _context = context;
+            _dbcontext = context;
             _discord = discord;
             _commands = commands;
             
             _discord.Log += OnLogAsync;
+            _discord.MessageReceived += OnMessageReceivedAsync;
             _commands.Log += OnLogAsync;
         }
-        
-        private Task OnLogAsync(LogMessage msg)
+
+        private async Task OnMessageReceivedAsync(SocketMessage s)
         {
+            var msg = s as SocketUserMessage;     // Ensure the message is from a user/bot
+            if (msg == null) return;
+
+
+            var socketCommand = new SocketCommandContext(_discord, msg);
+
+            //Log messages from user
+            UserLoggingHelper.LogUserMessage(socketCommand, _dbcontext);
+
+        }
+
+            private Task OnLogAsync(LogMessage msg)
+        {
+
             if (!Directory.Exists(_logDirectory))     // Create the log directory if it doesn't exist
                 Directory.CreateDirectory(_logDirectory);
             if (!File.Exists(_logFile))               // Create today's log file if it doesn't exist
