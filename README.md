@@ -21,6 +21,9 @@ Replace **DISCORD_BOT_TOKEN** with your discord bot's token
 
 See this [Dev Guide](https://discord.com/developers/docs/getting-started) for setting up a discord bot on discord and getting a bot token
 
+## ffmpeg - for voice chat
+Add ffmpeg.exe to your path. ffmpeg should be located in the root repo directory
+
 ## Entity Framework (Local DB Setup)
 Download and install [SQLServer Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
@@ -56,4 +59,3 @@ dotnet tool install --global dotnet-ef
 ### Elastic Beanstalk (EB)
 
 ### Relational Database Service (RDS)
-
