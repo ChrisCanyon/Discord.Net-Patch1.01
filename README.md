@@ -15,7 +15,8 @@ it should look like this:
 prefix: !
 tokens:
 	discord: DISCORD_BOT_TOKEN
-connection_string: YOUR_DB_CONNECTION_STRING
+connection_string: 
+    local:  YOUR_DB_CONNECTION_STRING
 ```
 Replace **DISCORD_BOT_TOKEN** with your discord bot's token
 
