@@ -32,12 +32,10 @@ namespace DiscordBot.Modules
             int? wordleNumber = GetWordleNumber(text);
             int? wordleScore = GetWordleScoreFromText(text);
 
-            if (wordleScore.HasValue)
+            if (wordleScore.HasValue && wordleNumber.HasValue)
             {
-
+                AddScoreToDB(wordleScore.Value, wordleNumber.Value);
             }
-
-
         }
 
         public int? GetWordleScoreFromText(string input)
@@ -76,23 +74,28 @@ namespace DiscordBot.Modules
 
         }
 
-        public void AddScoreToDB(int score, int wordleNum, SocketGuildUser thisUser)
+        public void AddScoreToDB(int score, int wordleNum)
         {
-            var user = DBContext.DiscordUsers.AsQueryable().Where(x => x.DiscordId == thisUser.Id).FirstOrDefault();
+            //TODO Consider breaking this out into a function or service
+            //try to find the user who posted
+            var user = DBContext.DiscordUsers.AsQueryable().Where(x => x.DiscordId == Context.User.Id).FirstOrDefault();
             if (user == null)
             {
+                //create a new record if they don't exist
                 user = new DiscordUser();
-                user.DiscordId = thisUser.Id;
-                DBContext.Add(user);
+                user.DiscordId = Context.User.Id;
+                user.NickName = Context.User.Username;
+                DBContext.DiscordUsers.Add(user);
             }
 
+            //create a new wordle record
             WordleRecord newRecord = new WordleRecord();
-            newRecord.UserId = user.Id;
+            newRecord.User = user;
             newRecord.Score = score;
             newRecord.WordleNumber = wordleNum;
             newRecord.PostDate = DateTime.Now;
 
-            DBContext.Add(newRecord);
+            DBContext.WordleRecords.Add(newRecord);
             DBContext.SaveChanges();
         }
 
