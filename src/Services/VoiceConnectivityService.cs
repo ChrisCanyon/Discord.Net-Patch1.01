@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,7 +57,7 @@ namespace DiscordBot
             return connection;
         }
 
-        public async Task OnDisconnect(Exception e)
+        private async Task OnDisconnect(Exception e)
         {
             var staleConnections = Connections.Where(x => x.Value.client.ConnectionState == ConnectionState.Disconnected || x.Value.client.ConnectionState == ConnectionState.Disconnecting).ToList();
             staleConnections.ForEach(x => Connections.Remove(x.Key));
@@ -72,7 +73,7 @@ namespace DiscordBot
                 Connections.TryGetValue(channel.Id, out connection);
 
                 //If it doesnt exist reconnect
-                if(connection == null)
+                if (connection == null)
                 {
                     var client = await channel.ConnectAsync();
                     connection = AddConnection(client, channel);
@@ -116,7 +117,6 @@ namespace DiscordBot
                 }
                 finally { await connection.stream.FlushAsync(); }
             }
-            Console.WriteLine("Moo");
         }
 
         private Process CreateStream(string path)

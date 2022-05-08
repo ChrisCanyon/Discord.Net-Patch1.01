@@ -18,7 +18,7 @@ namespace DiscordBot.Modules
         }
 
         [Command("help")]
-        public async Task HelpAsync()
+        private async Task HelpAsync()
         {
             string prefix = _config["prefix"];
             var builder = new EmbedBuilder()
