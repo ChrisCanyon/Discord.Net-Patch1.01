@@ -12,6 +12,7 @@ namespace DiscordBot.Models
         public int? Score { get; set; }
         public int? WordleNumber { get; set; }
         public DateTime? PostDate { get; set; }
+
         public virtual DiscordUser User { get; set; }
     }
 }

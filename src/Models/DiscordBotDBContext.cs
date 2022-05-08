@@ -22,7 +22,6 @@ namespace DiscordBot.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,9 +34,7 @@ namespace DiscordBot.Models
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.DiscordId)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DiscordId).HasColumnType("numeric(19, 0)");
 
                 entity.Property(e => e.NickName)
                     .HasMaxLength(50)

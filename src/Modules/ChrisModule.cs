@@ -29,24 +29,5 @@ namespace DiscordBot.Modules
 
             VoiceService.HandleAudioConnection(channel);
         }
-
-        [Command("Wordle")]
-        public async Task Test(string text)
-        {
-            var user = DBContext.DiscordUsers.AsQueryable().Where(x => x.DiscordId == "1234").FirstOrDefault();
-            if(user == null)
-            {
-                user = new DiscordUser();
-                user.DiscordId = "apple";
-                DBContext.Add(user);
-            }
-
-
-            var score = text.Split(" ")[1].Split("/")[0];
-            await ReplyAsync("This is a test");
-        }
-
-
-
     }
 }
