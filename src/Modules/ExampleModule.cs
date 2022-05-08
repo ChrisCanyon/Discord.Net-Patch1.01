@@ -34,7 +34,7 @@ namespace DiscordBot.Modules
 
         [Command("say"), Alias("s")]
         [Summary("Make the bot say something")]
-        [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireUserPermission(GuildPermission.SendMessages)]
         public Task Say([Remainder]string text)
         {
             return ReplyAsync(text);

@@ -92,7 +92,7 @@ namespace DiscordBot
             var syncedClient = await SyncAudioConnectionsAsync(channel);
             //Launch something to download youtube video
             //Get path to download
-            string path = @"C:\workspace\Discord.Net-Cory\src\TestAudio\Start_the_game_already.mp3";
+            string path = @"C:\Users\corys\workspace\Discord.Net-Patch1.01\src\TestAudio\Start_the_game_already.mp3";
 
             Process p = CreateStream(path);
 

@@ -13,7 +13,7 @@ namespace DiscordBot.Models
         }
 
         public Guid Id { get; set; }
-        public string DiscordId { get; set; }
+        public UInt64 DiscordId { get; set; }
         public string NickName { get; set; }
 
         public virtual ICollection<WordleRecord> WordleRecords { get; set; }

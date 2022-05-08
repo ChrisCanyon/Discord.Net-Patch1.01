@@ -10,8 +10,8 @@ namespace DiscordBot.Models
         public Guid Id { get; set; }
         public Guid? UserId { get; set; }
         public int? Score { get; set; }
+        public int? WordleNumber { get; set; }
         public DateTime? PostDate { get; set; }
-
         public virtual DiscordUser User { get; set; }
     }
 }
