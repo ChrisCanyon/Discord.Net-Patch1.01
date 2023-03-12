@@ -4,21 +4,21 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Example.Modules
+namespace DiscordBot.Modules
 {
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
         private readonly CommandService _service;
-        private readonly IConfigurationRoot _config;
+        private readonly IConfiguration _config;
 
-        public HelpModule(CommandService service, IConfigurationRoot config)
+        public HelpModule(CommandService service, IConfiguration config)
         {
             _service = service;
             _config = config;
         }
 
         [Command("help")]
-        public async Task HelpAsync()
+        private async Task HelpAsync()
         {
             string prefix = _config["prefix"];
             var builder = new EmbedBuilder()
